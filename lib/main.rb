@@ -52,7 +52,7 @@ class Hangman
   public
 
   def game
-    while @turn <= 20 do
+    while @turn <= 20
       puts "\nTurn #{@turn}/20!"
       puts "\nSecret code: #{@hidden_word.join(' ')} (#{@hidden_word.length} characters long)"
       unless @turn == 1
@@ -62,8 +62,11 @@ class Hangman
         serialize_game if @answer == 'yes'
       end
       guess
-      puts "\nUnfortunately, this was the last round and you didn't discovered the secret word. You lose!" if @turn == 19
+      if @turn == 20
+        puts "\nUnfortunately, this was the last round and you didn't discovered the secret word. You lose!"
+      end
       break if winner?
+
       @turn += 1
     end
   end
@@ -107,10 +110,10 @@ class Hangman
   def user_guess
     @guess = gets.chomp.strip.downcase
 
-    while @guess.length > 1 || @valid_letters.include?(@guess) || @guess == '' || @guess.nil?
-      if @valid_letters.include?(@guess)
+    while @guess.length > 1 || @valid_letters.any?(@guess) || @guess == '' || @guess.nil? || @user_guesses.any?(@guess)
+      if @user_guesses.include?(@guess)
         print "Seems you already entered '#{@guess}'. Enter another letter: "
-      else
+      elsif @guess.length > 1 || @valid_letters.include?(@guess) || @guess == '' || @guess.nil?
         print "\'#{@guess}\' is not a valid option. Enter another letter: "
       end
       @guess = gets.chomp.strip.downcase
