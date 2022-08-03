@@ -62,7 +62,7 @@ class Hangman
         serialize_game if @answer == 'yes'
       end
       guess
-      puts "\nUnfortunately, this was the last round and you didn't discovered the secret word. You lose!" if @turn == 19
+      puts "\nUnfortunately, this was the last round and you didn't discovered the secret word. You lose!" if @turn == 20
       break if winner?
       @turn += 1
     end
